@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Sang Panglima Tak Berkepala — Hikayat Demang Lehman</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Lora:ital,wght@0,400;0,600;1,400&display=swap');
+
+  :root{
+    --ink:#1a1207;
+    --gold:#b8863b;
+    --gold-light:#d5a56a;
+    --paper:#fdf8ec;
+    --paper-edge:#f0e6cf;
+    --red:#7a1f1f;
+    --cream:#f5ead2;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html,body{background:#8a7b63;font-family:'Lora',serif;}
+
+  /* ===== A5 PAGE ===== */
+  @page{ size:148mm 210mm; margin:0; }
+
+  .book{
+    display:flex;flex-direction:column;align-items:center;
+    padding:8mm 0;
+  }
+
+  .page{
+    width:148mm;
+    height:210mm;
+    background:var(--paper);
+    position:relative;
+    overflow:hidden;
+    page-break-after:always;
+    break-after:page;
+    box-shadow:0 2mm 8mm rgba(0,0,0,.35);
+    margin-bottom:4mm;
+    padding:12mm 11mm 14mm 11mm;
+    display:flex;
+    flex-direction:column;
+  }
+
+  .page:last-child{page-break-after:auto;break-after:auto;}
+
+  /* paper texture */
+  .page::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:
+      radial-gradient(ellipse at 20% 15%,rgba(184,134,59,.08),transparent 55%),
+      radial-gradient(ellipse at 85% 90%,rgba(60,42,33,.06),transparent 50%);
+    z-index:0;
+  }
+  .page::after{
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:.035;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    z-index:0;
+  }
+
+  .page > *{position:relative;z-index:1;}
+
+  /* ===== PAGE NUMBER ===== */
+  .folio{
+    position:absolute;bottom:6mm;left:0;right:0;text-align:center;
+    font-family:'Cormorant Garamond',serif;font-size:9pt;
+    color:var(--gold);letter-spacing:.3em;
+  }
+  .folio .orn{display:inline-block;margin:0 2mm;opacity:.6;}
+
+  /* ===== TYPOGRAPHY ===== */
+  h1,h2,h3{font-family:'Playfair Display',serif;color:var(--ink);}
+
+  .chapter-label{
+    font-family:'Cormorant Garamond',serif;
+    font-size:8.5pt;letter-spacing:.35em;text-transform:uppercase;
+    color:var(--gold);text-align:center;margin-bottom:3mm;
+  }
+  .chapter-title{
+    font-size:17pt;font-weight:900;line-height:1.15;
+    text-align:center;color:var(--ink);margin-bottom:2mm;
+  }
+  .chapter-sub{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:10.5pt;text-align:center;color:#5a4838;
+    margin-bottom:4mm;
+  }
+  .rule{
+    display:flex;align-items:center;justify-content:center;gap:2mm;
+    margin-bottom:4mm;
+  }
+  .rule .line{height:1px;width:12mm;background:linear-gradient(to right,transparent,var(--gold));}
+  .rule .line.r{background:linear-gradient(to left,transparent,var(--gold));}
+  .rule .dia{width:2mm;height:2mm;background:var(--gold);transform:rotate(45deg);}
+
+  p{
+    font-size:9.6pt;line-height:1.62;text-align:justify;
+    color:#241a0e;margin-bottom:2.4mm;
+    hyphens:auto;
+  }
+  p.first::first-letter{
+    font-family:'Playfair Display',serif;font-weight:900;
+    float:left;font-size:26pt;line-height:.78;
+    margin:1mm 1.6mm 0 0;color:var(--red);
+  }
+  p.center{text-align:center;text-indent:0;}
+  p.quote{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:10pt;color:#5a3f28;text-align:center;
+    border-top:1px solid rgba(184,134,59,.35);
+    border-bottom:1px solid rgba(184,134,59,.35);
+    padding:2.5mm 3mm;margin:3mm 0;
+  }
+  .drop{color:var(--red);font-weight:700;}
+
+  /* ===== COVER ===== */
+  .cover{
+    background:
+      radial-gradient(ellipse at 50% 0%,#3a2417 0%,#1a0e07 45%,#0a0603 100%);
+    padding:0;
+    display:flex;flex-direction:column;
+    color:var(--cream);
+  }
+  .cover .art{
+    position:absolute;inset:0;
+    background:
+      radial-gradient(circle at 50% 38%,rgba(213,165,106,.22),transparent 45%),
+      radial-gradient(circle at 80% 85%,rgba(122,31,31,.18),transparent 50%);
+  }
+  /* CSS silhouette of a headless warrior */
+  .cover svg.silhouette{
+    position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+    width:100%;height:62%;opacity:.95;
+  }
+  .cover .frame{
+    position:absolute;inset:6mm;
+    border:1px solid rgba(213,165,106,.45);
+    pointer-events:none;
+  }
+  .cover .frame::before{
+    content:"";position:absolute;inset:1.5mm;
+    border:1px solid rgba(213,165,106,.18);
+  }
+  .cover .corner{position:absolute;width:6mm;height:6mm;border:1.5px solid var(--gold-light);}
+  .cover .corner.tl{top:-1px;left:-1px;border-right:none;border-bottom:none;}
+  .cover .corner.tr{top:-1px;right:-1px;border-left:none;border-bottom:none;}
+  .cover .corner.bl{bottom:-1px;left:-1px;border-right:none;border-top:none;}
+  .cover .corner.br{bottom:-1px;right:-1px;border-left:none;border-top:none;}
+
+  .cover .content{
+    position:relative;z-index:2;
+    display:flex;flex-direction:column;
+    height:100%;padding:16mm 13mm 14mm;
+  }
+  .cover .badge{
+    align-self:center;display:inline-flex;align-items:center;gap:2mm;
+    padding:1.2mm 4mm;border:1px solid rgba(213,165,106,.5);
+    border-radius:99px;font-family:'Cormorant Garamond',serif;
+    font-size:7.5pt;letter-spacing:.25em;text-transform:uppercase;
+    color:var(--gold-light);margin-bottom:8mm;
+  }
+  .cover .badge .dot{width:1.4mm;height:1.4mm;border-radius:50%;background:var(--gold-light);}
+  .cover h1{
+    font-size:34pt;line-height:.95;text-align:center;
+    color:var(--cream);text-shadow:0 2px 12px rgba(0,0,0,.6);
+    font-weight:900;letter-spacing:-.01em;
+  }
+  .cover h1 span{color:var(--gold-light);}
+  .cover .sub{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:14pt;text-align:center;color:var(--gold-light);
+    margin-top:4mm;
+  }
+  .cover .divider{
+    display:flex;align-items:center;justify-content:center;gap:3mm;
+    margin:8mm 0 6mm;
+  }
+  .cover .divider .l{height:1px;width:18mm;background:linear-gradient(to right,transparent,var(--gold-light));}
+  .cover .divider .l.r{background:linear-gradient(to left,transparent,var(--gold-light));}
+  .cover .divider .d{width:2.2mm;height:2.2mm;background:var(--gold-light);transform:rotate(45deg);}
+  .cover .tagline{
+    text-align:center;font-family:'Cormorant Garamond',serif;
+    font-size:8.5pt;letter-spacing:.4em;text-transform:uppercase;
+    color:var(--gold-light);margin-top:auto;
+  }
+  .cover .author{
+    text-align:center;margin-top:6mm;
+    font-family:'Playfair Display',serif;font-size:11pt;color:var(--cream);
+  }
+  .cover .author small{
+    display:block;font-family:'Cormorant Garamond',serif;
+    font-size:7.5pt;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--gold-light);margin-bottom:1mm;
+  }
+
+  /* ===== FRANCIS ===== */
+  .francis{
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:20mm 14mm;
+  }
+  .francis .t{font-family:'Playfair Display',serif;font-size:20pt;line-height:1.1;color:var(--ink);}
+  .francis .s{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12pt;color:#5a4838;margin-top:3mm;}
+  .francis .orn{margin:8mm 0;display:flex;align-items:center;gap:3mm;}
+  .francis .orn .l{height:1px;width:20mm;background:linear-gradient(to right,transparent,var(--gold));}
+  .francis .orn .l.r{background:linear-gradient(to left,transparent,var(--gold));}
+  .francis .orn .d{width:2.4mm;height:2.4mm;border:1.4px solid var(--gold);transform:rotate(45deg);}
+  .francis .quote{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:13pt;line-height:1.5;color:#3a2a1a;
+    max-width:100mm;margin:0 auto;
+  }
+  .francis .quote .mark{font-family:'Playfair Display',serif;font-size:26pt;color:var(--gold);line-height:0;vertical-align:-4mm;}
+  .francis .meta{margin-top:12mm;font-size:9pt;color:#6a5848;line-height:1.7;}
+  .francis .meta b{color:var(--ink);font-family:'Playfair Display',serif;font-size:11pt;}
+
+  /* ===== TOC ===== */
+  .toc h2{font-size:18pt;text-align:center;margin-bottom:1mm;color:var(--ink);}
+  .toc .lead{text-align:center;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:10pt;color:#6a5848;margin-bottom:5mm;}
+  .toc ol{list-style:none;counter-reset:toc;}
+  .toc li{
+    counter-increment:toc;
+    display:flex;align-items:baseline;gap:2mm;
+    padding:1.6mm 0;border-bottom:1px dotted rgba(184,134,59,.35);
+  }
+  .toc li::before{
+    content:counter(toc,decimal-leading-zero);
+    font-family:'Cormorant Garamond',serif;font-weight:600;
+    font-size:9pt;color:var(--gold);min-width:6mm;
+  }
+  .toc li .t{font-family:'Lora',serif;font-size:9.2pt;color:var(--ink);flex:1;}
+  .toc li .p{font-family:'Cormorant Garamond',serif;font-size:9pt;color:#8a7050;}
+
+  /* ===== IMAGE BLOCK ===== */
+  .art-block{
+    width:100%;border:1px solid rgba(184,134,59,.35);
+    border-radius:2mm;overflow:hidden;margin:3mm 0;
+    background:#1a1207;position:relative;
+  }
+  .art-block svg{display:block;width:100%;height:auto;}
+  .art-block .cap{
+    position:absolute;bottom:0;left:0;right:0;
+    background:linear-gradient(to top,rgba(10,6,3,.92),transparent);
+    padding:5mm 3mm 2mm;color:var(--cream);
+    font-family:'Cormorant Garamond',serif;font-size:7.5pt;
+    letter-spacing:.15em;text-transform:uppercase;text-align:center;
+  }
+
+  /* ===== QUOTE PAGE ===== */
+  .quote-page{
+    display:flex;flex-direction:column;justify-content:center;
+    background:#1a1207;color:var(--cream);padding:18mm 13mm;
+  }
+  .quote-page .q{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:16pt;line-height:1.5;text-align:center;color:var(--cream);
+  }
+  .quote-page .q .mark{font-family:'Playfair Display',serif;font-size:40pt;color:var(--gold-light);line-height:0;vertical-align:-8mm;}
+  .quote-page .src{margin-top:6mm;text-align:center;font-family:'Cormorant Garamond',serif;font-size:9pt;letter-spacing:.25em;text-transform:uppercase;color:var(--gold-light);}
+  .quote-page .orn{margin-top:8mm;display:flex;justify-content:center;gap:3mm;}
+  .quote-page .orn .d{width:2mm;height:2mm;background:var(--gold-light);transform:rotate(45deg);}
+
+  /* ===== KRONOLOGI ===== */
+  .krono{list-style:none;}
+  .krono li{display:flex;gap:3mm;padding:1.8mm 0;border-bottom:1px solid rgba(184,134,59,.18);}
+  .krono li .y{font-family:'Playfair Display',serif;font-weight:700;font-size:9pt;color:var(--red);min-width:16mm;}
+  .krono li .e{font-size:8.8pt;line-height:1.5;color:#241a0e;flex:1;}
+
+  /* ===== GLOSSARY ===== */
+  .glos dt{font-family:'Playfair Display',serif;font-weight:700;font-size:9pt;color:var(--ink);margin-top:2mm;}
+  .glos dd{font-size:8.6pt;line-height:1.5;color:#3a2a1a;margin-left:0;}
+
+  /* ===== BACK COVER ===== */
+  .back{
+    background:
+      radial-gradient(ellipse at 50% 100%,#2a1a0e 0%,#0f0a05 60%,#000 100%);
+    color:var(--cream);display:flex;flex-direction:column;
+    align-items:center;justify-content:center;text-align:center;
+    padding:18mm 14mm;
+  }
+  .back .orn{display:flex;gap:3mm;margin-bottom:8mm;}
+  .back .orn .d{width:2mm;height:2mm;background:var(--gold-light);transform:rotate(45deg);}
+  .back .t{font-family:'Playfair Display',serif;font-size:16pt;line-height:1.2;color:var(--cream);}
+  .back .t em{color:var(--gold-light);font-style:normal;}
+  .back .p{font-family:'Cormorant Garamond',serif;font-size:11pt;line-height:1.6;color:#c9b897;margin-top:6mm;max-width:100mm;font-style:italic;}
+  .back .foot{margin-top:auto;font-family:'Cormorant Garamond',serif;font-size:8pt;letter-spacing:.35em;text-transform:uppercase;color:var(--gold-light);}
+
+  /* ===== PRINT ===== */
+  @media print{
+    html,body{background:#fff;}
+    .book{padding:0;}
+    .page{box-shadow:none;margin:0;border-radius:0;}
+    .cover{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  }
+</style>
+</head>
+<body>
+<div class="book">
+
+  <!-- ============ 01 — COVER ============ -->
+  <section class="page cover">
+    <div class="art"></div>
+    <svg class="silhouette" viewBox="0 0 400 360" preserveAspectRatio="xMidYMax meet">
+      <!-- headless warrior silhouette -->
+      <defs>
+        <linearGradient id="bg1" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#3a2417"/>
+          <stop offset="100%" stop-color="#0a0603"/>
+        </linearGradient>
+        <linearGradient id="cape" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#2a1810"/>
+          <stop offset="100%" stop-color="#050302"/>
+        </linearGradient>
+      </defs>
+      <!-- shoulders / torso -->
+      <path d="M200 150 C120 150 80 220 60 340 L340 340 C320 220 280 150 200 150 Z" fill="url(#cape)"/>
+      <!-- neck stub -->
+      <ellipse cx="200" cy="152" rx="26" ry="8" fill="#1a0e07"/>
+      <!-- sarong folds -->
+      <path d="M120 260 Q200 300 280 260 L300 340 L100 340 Z" fill="#140a04" opacity=".8"/>
+      <!-- keris held at side -->
+      <path d="M300 220 L316 300 L310 305 L294 228 Z" fill="#6a4a2a"/>
+      <path d="M312 300 L318 340 L314 342 L310 302 Z" fill="#3a2417"/>
+      <!-- spear -->
+      <line x1="90" y1="160" x2="60" y2="340" stroke="#3a2417" stroke-width="4"/>
+      <path d="M90 160 L84 120 L96 120 Z" fill="#8a6a3a"/>
+      <!-- red headband on neck -->
+      <path d="M174 150 Q200 140 226 150 L226 158 Q200 148 174 158 Z" fill="#7a1f1f"/>
+    </svg>
+    <div class="frame"><span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span></div>
+    <div class="content">
+      <div class="badge"><span class="dot"></span> Edisi Hikayat Sejarah</div>
+      <h1>SANG<br>PANGLIMA<br><span>TAK BERKEPALA</span></h1>
+      <div class="sub">Hikayat Demang Lehman</div>
+      <div class="divider"><span class="l"></span><span class="d"></span><span class="l r"></span></div>
+      <div class="tagline">Haram Manyarah · Waja Sampai Kaputing</div>
+      <div class="author"><small>Disadur oleh</small>Rafael Sukirno, CE.</div>
+    </div>
+    <div class="folio"><span class="orn">◆</span> 1 <span class="orn">◆</span></div>
+  </section>
+
+  <!-- ============ 02 — FRANCIS ============ -->
+  <section class="page francis">
+    <div class="t">SANG PANGLIMA<br>TAK BERKEPALA</div>
+    <div class="s">Hikayat Demang Lehman</div>
+    <div class="orn"><span class="l"></span><span class="d"></span><span class="l r"></span></div>
+    <div class="quote">
+      <span class="mark">“</span>Bukan tentang siapa yang paling kuat,<br>tetapi tentang siapa yang paling setia<br>pada tanahnya.<span class="mark">”</span>
+    </div>
+    <div class="meta">
+      <b>Rafael Sukirno, CE.</b><br>
+      Edisi Hikayat Sejarah · 2024<br>
+      Untuk pendidikan, dokumentasi populer,<br>
+      dan penghormatan kepada pahlawan tanah Banjar.
+    </div>
+    <div class="folio"><span class="orn">◆</span> 2 <span class="orn">◆</span></div>
+  </section>
+
+  <!-- ============ 03 — DAFTAR ISI ============ -->
+  <section class="page toc">
+    <h2>Daftar Isi</h2>
+    <div class="lead">Tujuh bab, satu sumpah, seratus enam puluh dua tahun jejak.</div>
+    <ol>
+      <li><span class="t">Prakata Penyadur</span><span class="p">4</span></li>
+      <li><span class="t">Bab I — Tanah Banjar yang Bergolak</span><span class="p">5</span></li>
+      <li><span class="t">Bab II — Idis Menjadi Demang</span><span class="p">7</span></li>
+      <li><span class="t">Bab III — Sumpah Setia</span><span class="p">9</span></li>
+      <li><span class="t">Bab IV — Perang Banjar 1859</span><span class="p">10</span></li>
+      <li><span class="t">Bab V — Taktik Gerilya &amp; Pusaka Keris</span><span class="p">12</span></li>
+      <li><span class="t">Bab VI — Benteng dan Pengkhianatan</span><span class="p">14</span></li>
+      <li><span class="t">Bab VII — Pengepungan Terakhir</span><span class="p">16</span></li>
+      <li><span class="t">Bab VIII — Penangkapan</span><span class="p">18</span></li>
+      <li><span class="t">Bab IX — 27 Februari 1864</span><span class="p">19</span></li>
+      <li><span class="t">Bab X — Sang Panglima Tak Berkepala</span><span class="p">21</span></li>
+      <li><span class="t">Warisan</span><span class="p">22</span></li>
+      <li><span class="t">Kronologi Ringkas</span><span class="p">23</span></li>
+      <li><span class="t">Glosarium &amp; Catatan Sumber</span><span class="p">24</span></li>
+      <li><span class="t">Epilog — Waja Sampai Kaputing</span><span class="p">25</span></li>
+    </ol>
+    <p class="quote" style="margin-top:5mm;">“Sejarah Banjar adalah sejarah yang hidup di mulut, bukan hanya di arsip.”</p>
+    <div class="folio"><span class="orn">◆</span> 3 <span class="orn">◆</span></div>
+  </section>
+
+  <!-- ============ 04 — PRAKATA ============ -->
+  <section class="page">
+    <div class="chapter-label">Prakata</div>
+    <div class="chapter-title">Penyadur</div>
+    <div class="chapter-sub">Oleh Rafael Sukirno, CE.</div>
+    <div class="rule"><span class="line"></span><span class="dia"></span><span class="line r"></span></div>
+    <p class="first">Ketika saya pertama kali mendengar nama Demang Lehman, yang terlintas bukanlah sosok jenderal dengan seragam berkilau. Yang terlintas adalah suara dayung yang memecah air hitam di Sungai Martapura menjelang subuh, bau mesiu yang bercampur lumpur, dan seorang lelaki yang memilih untuk tidak pulang ketika istana sudah runtuh.</p>
+    <p>Sebagai pelaut, saya memahami arti setia pada kompas. Demang Lehman mengajarkan arti setia pada tanah. Ia bukan bangsawan tinggi Kesultanan Banjar. Ia adalah <i>lalawangan</i>—kepala distrik, penghubung antara rakyat dan istana. Jabatan yang dalam catatan kolonial sering dianggap kecil, namun dalam realitas perang, justru menjadi tulang punggung perlawanan.</p>
+    <p>Mengapa kisahnya penting hari ini? Karena kita hidup di zaman yang mudah menyerah. <i>Haram Manyarah</i> bukan sekadar semboyan perang. Bagi pelaut seperti saya, ia adalah prinsip: ketika badai datang, kau tidak melompat dari kapal. Kau bertahan sampai <i>kaputing</i>—sampai ujung baja itu sendiri yang patah, bukan semangatmu.</p>
+    <p>E-book ini saya sadur dari berbagai sumber sejarah populer dan kajian akademik, lalu saya tulis kembali dalam gaya hikayat agar ia dapat dibaca oleh anak cucu kita, bukan hanya oleh sejarawan. Saya tidak mengklaim kebenaran mutlak. Saya hanya ingin api itu tetap menyala. Di Martapura, di Tabanio, di Gunung Lawak, dan di hati kita semua.</p>
+    <p class="quote">“Hikayat yang baik adalah hikayat yang terus diperbaiki oleh pembacanya.”</p>
+    <div class="folio"><span class="orn">◆</span> 4 <span class="orn">◆</span></div>
+  </section>
+
+  <!-- ============ 05 — BAB I (1) ============ -->
+  <section class="page">
+    <div class="chapter-label">Bab I</div>
+    <div class="chapter-title">Tanah Banjar<br>yang Bergolak</div>
+    <div class="chapter-sub">Kesultanan di Ambang Perpecahan</div>
+    <div class="rule"><span class="line"></span><span class="dia"></span><span class="line r"></span></div>
+    <p class="first">Pada pertengahan abad ke-19, Kesultanan Banjar bukanlah negeri yang tenang. Di atas kertas, ia masih berdaulat, dengan sultan yang duduk di Martapura dan sungai-sungai yang mengalirkan intan serta lada ke seluruh dunia. Namun di balik keindahan itu, bayang-bayang Batavia semakin panjang.</p>
+    <p>Belanda, melalui politik kontrak dan tipu muslihat, telah lama menginginkan kontrol penuh atas kekayaan Banjar. Perjanjian demi perjanjian dipaksakan. Sultan Adam Al-Watsiq Billah wafat pada tahun 1857, meninggalkan perebutan takhta yang sengaja dibiarkan membara oleh pemerintah Hindia Belanda. Dua pangeran bersaing: Pangeran Hidayatullah II yang dicintai rakyat, dan Pangeran Tamjidillah II yang didukung Belanda.</p>
+    <p>Rakyat menyaksikan dengan getir bagaimana istana mereka diadu domba. Pajak dinaikkan, tanah dirampas untuk konsesi batu bara di Pengaron, dan para pembesar dipaksa memilih sisi. Di desa-desa sepanjang Martapura hingga ke pedalaman Meratus, kemarahan itu memadat seperti awan sebelum hujan.</p>
+    <p>Mereka tidak membutuhkan dekrit sultan untuk tahu bahwa tanah mereka sedang dijajah perlahan. Dan dari desa-desa itulah, para <i>lalawangan</i> seperti Demang Lehman mulai mengasah keris mereka.</p>
+    <div class="folio"><span class="orn">◆</span> 5 <span class="orn">◆</span></div>
+  </section>
+
+  <!-- ============ 06 — BAB I (2) + ART ============ -->
+  <section class="page">
+    <div class="chapter-sub">Peta Kekuasaan &amp; Sumber Konflik</div>
+    <div class="art-block">
+      <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#2a1a0e"/>
+            <stop offset="100%" stop-color="#0a0603"/>
+          </linearGradient>
+          <linearGradient id="river" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#3a5a7a"/>
+            <stop offset="100%" stop-color="#1a2a3a"/>
+          </linearGradient>
+        </defs>
+        <rect width="400" height="200" fill="url(#sky)"/>
+        <!-- hills -->
+        <path d="M0 120 Q60 70 120 100 T240 90 T360 110 L400 100 L400 200 L0 200 Z" fill="#1a0e07" opacity=".9"/>
+        <path d="M0 140 Q80 110 160 130 T320 125 T400 135 L400 200 L0 200 Z" fill="#0f0a05"/>
+        <!-- river -->
+        <path d="M0 170 Q100 150 180 165 T400 160 L400 200 L0 200 Z" fill="url(#river)" opacity=".85"/>
+        <!-- fort silhouette -->
+        <g fill="#050302">
+          <rect x="60" y="95" width="40" height="40"/>
+          <rect x="55" y="90" width="8" height="12"/>
+          <rect x="75" y="90" width="8" height="12"/>
+          <rect x="95" y="90" width="8" height="12"/>
+          <rect x="70" y="120" width="20" height="15" fill="#3a2417"/>
+        </g>
+        <!-- flag -->
+        <line x1="80" y1="95" x2="80" y2="75" stroke="#8a6a3a" stroke-width="1.5"/>
+        <rect x="80" y="75" width="14" height="9" fill="#7a1f1f"/>
+        <!-- small boats -->
+        <g fill="#0a0603" stroke="#3a2417" stroke-width=".5">
+          <path d="M180 172 Q188 166 196 172 L194 176 L182 176 Z"/>
+          <path d="M260 168 Q268 162 276 168 L274 172 L262 172 Z"/>
+          <path d="M330 174 Q338 168 346 174 L344 178 L332 178 Z"/>
+        </g>
+        <!-- labels -->
+        <text x="80" y="150" text-anchor="middle" fill="#d5a56a" font-family="serif" font-size="7" letter-spacing="1">MARTAPURA</text>
+        <text x="280" y="192" text-anchor="middle" fill="#d5a56a" font-family="serif" font-size="6" opacity=".7">SUNGAI BARITO</text>
+      </svg>
+      <div class="cap">Ilustrasi artistik · Martapura di tepi sungai, saksi perang dan eksekusi</div>
+    </div>
+    <p>Peta kekuasaan pada 1850-an menunjukkan tiga simpul yang saling bertaut: <b>Martapura</b> sebagai jantung istana, <b>Tabanio</b> sebagai pelabuhan mesiu di pesisir, dan <b>Gunung Lawak</b> sebagai benteng alam di pedalaman. Ketiganya akan menjadi medan perang selama lima tahun.</p>
+    <p>Konflik takhta bukan hanya soal siapa yang duduk di singgasana. Ia menyangkut siapa yang berhak mengatur pajak, tanah, dan masa depan rakyat. Belanda memahami hal ini. Maka mereka tidak hanya mengadu dua pangeran—mereka mengadu seluruh negeri.</p>
+    <p>Di sinilah sejarah Banjar berbelok. Dari intrik istana menuju hutan, dari hutan menuju tiang gantungan. Dan di tengah semua itu, seorang <i>lalawangan</i> bernama Idis bersiap menanggung beban yang tidak ia minta.</p>
+    <div class="folio"><span class="orn">◆</span> 6 <span class="orn">◆</span></div>
+  </section>
+
+  <!-- ============ 07 — BAB II (1) ============ -->
+  <section class="page">
+    <div class="chapter-label">Bab II</div>
+    <div class="chapter-title">Idis Menjadi<br>Demang</div>
+    <div class="chapter-sub">Lahir 1832 · Diangkat Sekitar 1857</div>
+    <div class="rule"><span class="line"></span><span class="dia"></span><span class="line r"></span></div>
+    <p class="first">Dalam catatan yang berserakan, namanya mula-mula disebut <b>Idis</b>, atau <i>Idies</i>. Lahir sekitar tahun 1832 di wilayah Kesultanan Banjar, ia tumbuh sebagai anak sungai—mengenal arus, mengenal hutan, mengenal kapan padi harus ditanam dan kapan Belanda harus dilawan.</p>
+    <p>Jabatan <i>lalawangan</i> bukanlah jabatan pewaris. Ia harus direbut dengan kepercayaan. Seorang <i>lalawangan</i> adalah kepala distrik, pemimpin beberapa kampung, penarik pajak yang adil, hakim kecil, dan panglima perang lokal ketika diperlukan.</p>
+    <p>Sekitar tahun 1857, Idis diangkat menjadi <i>lalawangan</i> di wilayah Tabalong–Binua Lima. Gelar <b>Kiai Demang Lehman</b> kemudian melekat padanya—sebuah pengakuan atas wibawa dan keberaniannya.</p>
+    <p>Gelar “Demang” menandakan posisi administratif, namun “Lehman” adalah nama yang kemudian menjadi legenda. Beberapa sumber menyebutnya berasal dari nama kampung, yang lain menyebutnya sebagai nama panggilan masa kecil yang mengeras menjadi identitas perjuangan. Apapun asalnya, sejak saat itu Idis bukan lagi sekadar Idis.</p>
+    <div class="folio"><span class="orn">◆</span> 7 <span class="orn">◆</span></div>
+  </section>
+
+  <!-- ============ 08 — BAB II (2) ============ -->
+  <section class="page">
+    <div class="chapter-sub">Dari Sungai ke Istana</div>
+    <p>Ia adalah Demang Lehman, jembatan antara istana dan hutan, antara perintah sultan dan amarah rakyat. Dan ketika perang meletus, jembatan itulah yang pertama kali dibakar Belanda—namun tak pernah runtuh.</p>
+    <div class="art-block">
+      <svg viewBox="0 0 400 170" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="dusk" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#2a1408"/>
+            <stop offset="60%" stop-color="#4a2410"/>
+            <stop offset="100%" stop-color="#0a0603"/>
+          </linearGradient>
+        </defs>
+        <rect width="400" height="170" fill="url(#dusk)"/>
+        <!-- sun disc -->
+        <circle cx="320" cy="50" r="22" fill="#d5a56a" opacity=".65"/>
+        <circle cx="320" cy="50" r="34" fill="#d5a56a" opacity=".15"/>
+        <!-- river reflection -->
+        <rect y="120" width="400" height="50" fill="#1a1207"/>
+        <path d="M300 120 L400 120 L400 170 L260 170 Z" fill="#d5a56a" opacity=".1"/>
+        <!-- house on stilts -->
+        <g fill="#050302">
+          <rect x="60" y="90" width="60" height="30"/>
+          <path d="M55 90 L90 65 L125 90 Z"/>
+          <line x1="70" y1="120" x2="70" y2="135" stroke="#050302" stroke-width="2"/>
+          <line x1="110" y1="120" x2="110" y2="135" stroke="#050302" stroke-width="2"/>
+        </g>
+        <!-- lamp glow -->
+        <circle cx="90" cy="100" r="4" fill="#f5e6c8" opacity=".8"/>
+        <!-- boat -->
+        <g fill="#050302">
+          <path d="M180 140 Q200 132 220 140 L216 146 L184 146 Z"/>
+          <line x1="200" y1="132" x2="200" y2="120" stroke="#050302" stroke-width="1.5"/>
+          <path d="M200 120 L212 126 L200 130 Z" fill="#3a2417"/>
+        </g>
+        <text x="90" y="160" text-anchor="middle" fill="#d5a56a" font-family="serif" font-size="6" opacity=".7" letter-spacing="1">RUMAH LANTING</text>
+      </svg>
+      <div class="cap">Ilustrasi artistik · Rumah lanting di tepi sungai, saksi masa kecil Idis</div>
+    </div>
+    <p>Tugas seorang <i>lalawangan</i> tidak hanya soal administrasi. Ia harus tahu berapa banyak lumbung padi di kampungnya, siapa yang bisa memegang senjata, dan jalan tikus mana yang bisa dilalui tanpa jejak. Kecakapan inilah yang kelak membuat Belanda kewalahan.</p>
+    <p>Namun sebelum perang, masa mudanya adalah masa tenang. Ia belajar mengaji, belajar berdagang kecil-kecilan, dan belajar mendengar. Banyak orang tua di Riam Kanan mengenangnya sebagai pemuda yang lebih suka mendengar daripada berbicara—sebuah sifat yang jarang dimiliki pemimpin.</p>
+    <p>Ketika Pangeran Hidayatullah II mulai mengumpulkan <i>punakawan</i>—pengawal kepercayaan—nama Idis muncul. Ia diterima bukan karena keturunan, tetapi karena kesetiaan yang sudah teruji di kampungnya sendiri.</p>
+    <div class="folio"><span class="orn">◆</span> 8 <span class="orn">◆</span></div>
+  </section>
+
+  <!-- ============ 09 — BAB III ============ -->
+  <section class="page">
+    <div class="chapter-label">Bab III</div>
+    <div class="chapter-title">Sumpah Setia</div>
+    <div class="chapter-sub">Haram Manyarah · Waja Sampai Kaputing</div>
+    <div class="rule"><span class="line"></span><span class="dia"></span><span class="line r"></span></div>
+    <p class="first">Di antara semua pangeran Banjar, hati Demang Lehman tertambat pada satu nama: <b>Pangeran Hidayatullah II</b>. Hidayat bukan sekadar pewaris takhta yang sah menurut adat; ia adalah simbol perlawanan terhadap intervensi. Rakyat mencintainya karena ia menolak menjadi boneka. Dan Demang Lehman melihat pada diri Hidayat bayangan pemimpin yang layak diikuti hingga mati.</p>
+    <p>Sumpah kesetiaan itu diucapkan bukan di dalam istana dengan upacara megah, melainkan di atas tanah basah, di bawah pohon besar, dengan keris terhunus dan Al-Quran sebagai saksi. <b>“Haram Manyarah, Waja Sampai Kaputing”</b>—haram hukumnya menyerah, baja harus sampai ke ujung.</p>
+    <p>Semboyan Banjar ini bukan yel-yel kosong. Ia adalah falsafah hidup: lebih baik patah daripada bengkok, lebih baik gugur daripada tunduk. Bagi Demang Lehman, sumpah itu berarti tidak ada jalan pulang.</p>
+    <p>Ketika Belanda pada 1859 mengukuhkan Tamjidillah dan kemudian membubarkan Kesultanan Banjar secara sepihak, Hidayatullah diangkat rakyat sebagai Sultan. Demang Lehman menjadi panglima terdepan. Ia mengorganisasi pasukan rakyat, mengumpulkan mesiu dari pedagang Bugis, dan menyiapkan perahu-perahu perang di sungai yang hanya ia yang tahu liku-likunya.</p>
+    <p>Sumpah telah diucapkan. Dan bagi orang Banjar, sumpah lebih berat dari nyawa.</p>
+    <div class="folio"><span class="orn">◆</span> 9 <span class="orn">◆</span></div>
+  </section>
+
+  <!-- ============ 10 — BAB IV (1) ============ -->
+  <section class="page">
+    <div class="chapter-label">Bab IV</div>
+    <div class="chapter-title">Perang Banjar<br>1859</div>
+    <div class="chapter-sub">Api Menyala dari Martapura ke Tabanio</div>
+    <div class="rule"><span class="line"></span><span class="dia"></span><span class="line r"></span></div>
+    <p class="first"><b>28 April 1859.</b> Tanggal itu dicatat sebagai awal Perang Banjar terbuka. Penyerangan terhadap tambang batu bara Pengaron menjadi sinyal: rakyat Banjar tidak lagi menerima pengkhianatan. Di Martapura, benteng Belanda diserang. Di Tabanio, gudang mesiu meledak. Asap hitam membumbung, dan untuk pertama kalinya dalam puluhan tahun, bendera Belanda diturunkan paksa oleh tangan orang Banjar sendiri.</p>
+    <p>Demang Lehman tidak berperang seperti tentara Eropa dengan barisan rapi. Ia berperang seperti sungai—menghilang dan muncul tiba-tiba. Pasukannya bergerak cepat antara Martapura, Tabanio, dan Gunung Lawak.</p>
+    <p>Gunung Lawak, yang hari ini tampak sebagai perbukitan tenang, pada masa itu adalah benteng alam. Hutan lebat, jurang dalam, dan hanya penduduk lokal yang tahu jalan tikus menuju puncak.</p>
+    <p>Belanda mencatat dalam laporan mereka: <i>“Pemberontak dipimpin oleh Demang Lehman, sangat fanatik dan mengenal medan dengan sangat baik.”</i> Mereka mengirim ekspedisi demi ekspedisi. Kapten Van Langen, Letnan Beeckman—nama-nama yang dikirim untuk memadamkan api, namun pulang dengan cerita tentang pasukan yang tak pernah bisa dikepung.</p>
+    <p>Sebab bagaimana kau mengepung angin? Bagaimana kau menangkap sungai? Demang Lehman adalah keduanya.</p>
+    <div class="folio"><span class="orn">◆</span> 10 <span class="orn">◆</span></div>
+  </section>
+
+  <!-- ============ 11 — BAB IV (2) + ART ============ -->
+  <section class="page">
+    <div class="chapter-sub">Medan yang Menentukan</div>
+    <div class="art-block">
+      <svg viewBox="0 0 400 190" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="battle" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#2a1408"/>
+            <stop offset="70%" stop-color="#1a0e07"/>
+            <stop offset="100%" stop-color="#050302"/>
+          </linearGradient>
+          <radialGradient id="fire" cx="50%" cy="60%" r="50%">
+            <stop offset="0%" stop-color="#d5a56a" stop-opacity=".8"/>
+            <stop offset="100%" stop-color="#7a1f1f" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <rect width="400" height="190" fill="url(#battle)"/>
+        <ellipse cx="200" cy="120" rx="120" ry="50" fill="url(#fire)"/>
+        <!-- fort -->
+        <g fill="#050302">
+          <rect x="150" y="90" width="100" height="50"/>
+          <rect x="145" y="85" width="10" height="10"/>
+          <rect x="175" y="85" width="10" height="10"/>
+          <rect x="215" y="85" width="10" height="10"/>
+          <rect x="245" y="85" width="10" height="10"/>
+          <path d="M150 90 L200 70 L250 90 Z" fill="#0a0603"/>
+        </g>
+        <!-- smoke -->
+        <path d="M200 60 Q180 40 200 20 Q220 10 210 -5" stroke="#3a2417" stroke-width="6" fill="none" opacity=".4"/>
+        <path d="M220 55 Q240 30 230 10" stroke="#3a2417" stroke-width="4" fill="none" opacity=".3"/>
+        <!-- attacking warriors (silhouettes) -->
+        <g fill="#050302">
+          <path d="M40 140 l6 -18 l6 18 z"/>
+          <path d="M60 140 l6 -18 l6 18 z"/>
+          <path d="M80 140 l6 -18 l6 18 z"/>
+          <path d="M100 140 l6 -18 l6 18 z"/>
+          <path d="M340 140 l6 -18 l6 18 z"/>
+          <path d="M360 140 l6 -18 l6 18 z"/>
+        </g>
+        <!-- spears -->
+        <g stroke="#3a2417" stroke-width="1.2">
+          <line x1="46" y1="122" x2="46" y2="100"/>
+          <line x1="66" y1="122" x2="66" y2="100"/>
+          <line x1="86" y1="122" x2="86" y2="100"/>
+          <line x1="346" y1="122" x2="346" y2="100"/>
+        </g>
+        <text x="200" y="180" text-anchor="middle" fill="#d5a56a" font-family="serif" font-size="6" opacity=".6" letter-spacing="2">GUNUNG LAWAk · 1859</text>
+      </svg>
+      <div class="cap">Ilustrasi artistik · Serangan malam terhadap benteng Belanda</div>
+    </div>
+    <p>Tiga medan menjadi saksi utama: <b>Martapura</b>, <b>Tabanio</b>, dan <b>Gunung Lawak</b>. Di Martapura, pasukan Demang Lehman sempat mengguncang pertahanan Belanda dan hampir menewaskan Letnan Kolonel Boon Ostade. Di Tabanio, taktik pengepungan memaksa Belanda mundur ke pesisir. Di Gunung Lawak, hutan menjadi sekutu.</p>
+    <p>Yang membuat Belanda frustrasi bukan hanya keberanian, tetapi <i>pengetahuan medan</i>. Pasukan Banjar tahu kapan air pasang, kapan kabut turun, di mana akar meranti bisa menjadi perangkap. Perang ini bukan hanya perang senjata—ia perang ingatan atas tanah.</p>
+    <div class="folio"><span class="orn">◆</span> 11 <span class="orn">◆</span></div>
+  </section>
+
+  <!-- ============ 12 — BAB V (1) ============ -->
+  <section class="page">
+    <div class="chapter-label">Bab V</div>
+    <div class="chapter-title">Taktik Gerilya<br>&amp; Pusaka Keris</div>
+    <div class="chapter-sub">Perang di Hutan dan di Hati</div>
+    <div class="rule"><span class="line"></span><span class="dia"></span><span class="line r"></span></div>
+    <p class="first">Perang gerilya Demang Lehman bukanlah improvisasi. Ia adalah strategi yang lahir dari pengetahuan mendalam tentang tanah. Ia tahu kapan air pasang di Sungai Barito akan menghambat kapal uap Belanda, kapan kabut di Gunung Lawak akan turun hingga jarak pandang hanya sejengkal, dan di mana akar-akar pohon meranti dapat menjadi perangkap bagi sepatu-sepatu tentara kolonial.</p>
+    <p>Pasukan dibagi kecil-kecil, lima hingga sepuluh orang, masing-masing dipimpin oleh kepala kampung yang dipercaya. Mereka tidak membawa meriam besar. Mereka membawa kelewang, tombak, dan senapan lantakan tua yang diisi mesiu buatan sendiri.</p>
+    <p>Namun mereka membawa sesuatu yang tidak dimiliki Belanda: keyakinan bahwa setiap jengkal tanah adalah rumah. Dan rumah harus dipertahankan.</p>
+    <p>Di pinggang Demang Lehman, terselip sebuah keris. Bukan keris pusaka istana yang berkilau emas, melainkan keris Banjar dengan pamor sederhana, warangka kayu ulin yang telah hitam oleh keringat dan darah.</p>
+    <p>Dalam tradisi Banjar, keris bukanlah sekadar senjata. Ia adalah <b>pusaka</b>, perpanjangan dari jiwa. Ketika Demang Lehman menghunus kerisnya sebelum bertempur, ia tidak sedang menunjukkan kekuatan. Ia sedang mengingatkan pasukannya: kita bertempur bukan untuk membunuh, tetapi untuk menjaga agar pusaka ini tetap berada di tanah kita.</p>
+    <div class="folio"><span class="orn">◆</span> 12 <span class="orn">◆</span></div>
+  </section>
+
+  <!-- ============ 13 — BAB V (2) + KERIS ART ============ -->
+  <section class="page">
+    <div class="chapter-sub">Pusaka yang Menjaga Tuannya</div>
+    <div class="art-block">
+      <svg viewBox="0 0 400 130" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="blade" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#e8d8b0"/>
+            <stop offset="50%" stop-color="#f5e6c8"/>
+            <stop offset="100%" stop-color="#8a6a3a"/>
+          </linearGradient>
+          <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#5a3a1a"/>
+            <stop offset="100%" stop-color="#1a0e07"/>
+          </linearGradient>
+        </defs>
+        <rect width="400" height="130" fill="#1a1207"/>
+        <!-- cloth background -->
+        <path d="M0 40 Q200 20 400 40 L400 100 Q200 80 0 100 Z" fill="#3a2417" opacity=".5"/>
+        <!-- keris -->
+        <g transform="translate(200,65) rotate(-8)">
+          <!-- handle -->
+          <path d="M-100 -4 L-70 -4 L-70 4 L-100 4 Z" fill="url(#wood)"/>
+          <path d="M-100 -6 Q-110 -4 -110 0 Q-110 4 -100 6 Z" fill="#3a2417"/>
+          <!-- guard -->
+          <rect x="-70" y="-8" width="8" height="16" fill="#8a6a3a"/>
+          <!-- blade (wavy) -->
+          <path d="M-62 0 Q-40 -8 -30 0 Q-20 8 -10 0 Q0 -8 10 0 Q20 8 30 0 Q40 -8 50 0 Q60 8 70 0 Q80 -8 90 0 L90 2 Q80 -6 70 2 Q60 10 50 2 Q40 -6 30 2 Q20 10 10 2 Q0 -6 -10 2 Q-20 10 -30 2 Q-40 -6 -50 2 L-62 2 Z" fill="url(#blade)"/>
+          <!-- pamor lines -->
+          <path d="M-58 0 Q-40 -6 -30 0 Q-20 6 -10 0 Q0 -6 10 0 Q20 6 30 0 Q40 -6 50 0 Q60 6 70 0 Q80 -6 88 0" stroke="#8a6a3a" stroke-width=".5" fill="none" opacity=".6"/>
+          <!-- warangka tip -->
+          <path d="M90 -2 L98 0 L90 2 Z" fill="#8a6a3a"/>
+        </g>
+        <text x="200" y="120" text-anchor="middle" fill="#d5a56a" font-family="serif" font-size="6" opacity=".7" letter-spacing="2">KERIS BANJAR · WARANGKA KAYU ULIN</text>
+      </svg>
+      <div class="cap">Ilustrasi artistik · Keris pusaka Banjar dengan pamor sederhana</div>
+    </div>
+    <p>Keris itu tidak pernah ditemukan. Setelah Demang Lehman dieksekusi, pusaka-pusakanya dirampas Belanda. Namun rakyat Banjar percaya, keris itu bukan sekadar logam—ia adalah janji. Selama masih ada orang Banjar yang mengingat janji, keris itu tetap “ada” di tanah.</p>
+    <p>Gerilya Demang Lehman mengajarkan satu hal: kekuatan bukan hanya soal jumlah. Kekuatan adalah soal <b>kesesuaian dengan tanah</b>. Pasukan yang mengenal hutan lebih mematikan daripada pasukan yang membawa meriam. Dan Belanda, sekuat apa pun senjatanya, tetap <i>orang asing</i> di hutan itu.</p>
+    <div class="folio"><span class="orn">◆</span> 13 <span class="orn">◆</span></div>
+  </section>
+
+  <!-- ============ 14 — BAB VI (1) ============ -->
+  <section class="page">
+    <div class="chapter-label">Bab VI</div>
+    <div class="chapter-title">Benteng dan<br>Pengkhianatan</div>
+    <div class="chapter-sub">Tahun-Tahun Berat 1860–1862</div>
+    <div class="rule"><span class="line"></span><span class="dia"></span><span class="line r"></span></div>
+    <p class="first">Tahun 1860 hingga 1862 adalah masa paling kelam sekaligus paling heroik. Belanda, yang gagal mengalahkan pasukan gerilya secara terbuka, mengubah strategi. Mereka membangun benteng-benteng kecil di setiap persimpangan sungai, memutus jalur logistik, dan yang paling keji—menggunakan politik pengasingan dan pengkhianatan.</p>
+    <p>Pangeran Hidayatullah II, pemimpin yang menjadi sumber legitimasi seluruh perlawanan, akhirnya tertangkap tipu muslihat perundingan. Pada tahun 1862, ia diasingkan ke Cianjur, Jawa Barat.</p>
+    <p>Kabar itu sampai ke telinga Demang Lehman di tengah hutan. Banyak panglima lain yang goyah, yang kemudian menyerah dan menerima amnesti Belanda. Namun Demang Lehman menolak.</p>
+    <p><i>“Selama satu orang Banjar masih menolak tunduk, maka Kesultanan belum bubar,”</i> katanya menurut hikayat lisan yang diwariskan.</p>
+    <p>Pertempuran benteng menjadi keseharian. Benteng Tabaniau, Benteng Munggu Thayor—nama-nama yang kini hanya tinggal batu, pada masa itu adalah arena di mana darah Banjar dan Belanda tumpah bersama. Demang Lehman memimpin pengepungan selama berminggu-minggu, memutus pasokan air, membakar lumbung padi Belanda, lalu menghilang sebelum bantuan tiba.</p>
+    <div class="folio"><span class="orn">◆</span> 14 <span class="orn">◆</span></div>
+  </section>
+
+  <!-- ============ 15 — BAB VI (2) ============ -->
+  <section class="page">
+    <div class="chapter-sub">Duri yang Tidak Bisa Dicabut</div>
+    <p>Belanda frustrasi. Dalam surat kepada Gubernur Jenderal, seorang residen menulis: <i>“Lehman adalah duri yang tidak bisa dicabut.”</i></p>
+    <p>Frustrasi itu melahirkan kekejaman. Kampung-kampung yang dicurigai membantu gerilya dibakar. Sawah-sawah dibanjiri. Ternak dirampas. Belanda berharap rakyat berbalik melawan Demang Lehman karena kelaparan. Namun yang terjadi sebaliknya—rakyat semakin menyembunyikannya.</p>
+    <div class="art-block">
+      <svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
+        <rect width="400" height="140" fill="#1a0e07"/>
+        <!-- burning village -->
+        <g fill="#050302">
+          <rect x="40" y="80" width="40" height="30"/>
+          <path d="M35 80 L60 60 L85 80 Z"/>
+          <rect x="110" y="85" width="35" height="25"/>
+          <path d="M105 85 L127 65 L150 85 Z"/>
+          <rect x="200" y="80" width="45" height="30"/>
+          <path d="M195 80 L222 60 L250 80 Z"/>
+          <rect x="300" y="85" width="40" height="25"/>
+          <path d="M295 85 L320 65 L345 85 Z"/>
+        </g>
+        <!-- flames -->
+        <g fill="#d5a56a" opacity=".7">
+          <path d="M60 60 Q55 45 62 35 Q65 45 68 40 Q70 50 65 60 Z"/>
+          <path d="M127 65 Q122 50 130 42 Q133 52 136 47 Q138 57 132 65 Z"/>
+          <path d="M222 60 Q217 45 224 35 Q227 45 230 40 Q232 50 227 60 Z"/>
+        </g>
+        <g fill="#7a1f1f" opacity=".6">
+          <path d="M60 60 Q58 52 62 46 Q64 54 66 50 Q66 56 62 60 Z"/>
+          <path d="M222 60 Q220 52 224 46 Q226 54 228 50 Q228 56 224 60 Z"/>
+        </g>
+        <!-- smoke -->
+        <path d="M60 40 Q40 20 60 0" stroke="#3a2417" stroke-width="3" fill="none" opacity=".3"/>
+        <path d="M222 40 Q240 20 220 0" stroke="#3a2417" stroke-width="3" fill="none" opacity=".3"/>
+        <text x="200" y="132" text-anchor="middle" fill="#d5a56a" font-family="serif" font-size="6" opacity=".6" letter-spacing="2">KAMPUNG YANG DICURIGAI · 1861</text>
+      </svg>
+      <div class="cap">Ilustrasi artistik · Kekejaman kolonial terhadap kampung yang membantu gerilya</div>
+    </div>
+    <p>Di sinilah letak tragedi. Perang gerilya selalu punya dua korban: musuh di depan, dan rakyat di belakang. Demang Lehman tahu itu. Ia tahu setiap kali ia menghilang ke hutan, ada kampung yang harus menanggung akibatnya.</p>
+    <p>Namun ia juga tahu, mundur berarti menyerahkan semuanya. Maka ia bertahan—bukan karena tidak peduli, tetapi karena satu-satunya cara melindungi rakyat dalam jangka panjang adalah memastikan Belanda tidak pernah merasa aman.</p>
+    <div class="folio"><span class="orn">◆</span> 15 <span class="orn">◆</span></div>
+  </section>
+
+  <!-- ============ 16 — BAB VII (1) ============ -->
+  <section class="page">
+    <div class="chapter-label">Bab VII</div>
+    <div class="chapter-title">Pengepungan<br>Terakhir</div>
+    <div class="chapter-sub">1863–1864 · Ketika Lingkaran Makin Sempit</div>
+    <div class="rule"><span class="line"></span><span class="dia"></span><span class="line r"></span></div>
+    <p class="first">Memasuki tahun 1863, peta perlawanan menyusut. Satu per satu kampung jatuh, satu per satu panglima menyerah atau gugur. Pasukan Demang Lehman yang dulu berjumlah ratusan, kini tinggal puluhan. Mereka tidak lagi memiliki desa untuk kembali. Mereka hidup di hutan, tidur di atas perahu yang ditambatkan di rawa-rawa, makan dari apa yang diberikan alam dan rakyat yang masih setia secara diam-diam.</p>
+    <p>Belanda mengerahkan pasukan <i>Marsose</i>, pasukan khusus yang kejam dan terlatih untuk perang hutan. Hadiah besar diumumkan: siapa yang bisa menangkap Demang Lehman hidup atau mati akan mendapat tanah dan pangkat.</p>
+    <p>Pengkhianatan mulai muncul dari dalam—bukan karena benci, tetapi karena lapar dan lelah. Beberapa orang yang pernah makan bersama Demang Lehman kini menjadi mata-mata, menunjukkan jalan rahasia kepada Belanda.</p>
+    <p>Namun bahkan dalam keadaan terjepit, Demang Lehman masih sempat melakukan serangan balik. Pada akhir 1863, ia memimpin serangan mendadak ke pos Belanda di Martapura, membakar gudang logistik dan membebaskan tawanan perang Banjar.</p>
+    <div class="folio"><span class="orn">◆</span> 16 <span class="orn">◆</span></div>
+  </section>
+
+  <!-- ============ 17 — BAB VII (2) ============ -->
+  <section class="page">
+    <div class="chapter-sub">Serangan Terakhir</div>
+    <p>Itu adalah serangan terakhir yang besar. Setelah itu, ia tahu waktunya tidak banyak lagi. Ia memerintahkan sebagian pasukannya untuk menyebar dan kembali ke keluarga masing-masing.</p>
+    <p class="quote">“Jangan mati bersamaku. Hiduplah untuk menceritakan bahwa kita pernah melawan.”</p>
+    <p>Kalimat itu diwariskan dari mulut ke mulut. Tidak ada catatan Belanda yang mengonfirmasinya. Namun rakyat Banjar mempercayainya—karena itulah yang dilakukan seorang pemimpin sejati di akhir perjuangan: menyelamatkan orang-orangnya, bukan dirinya sendiri.</p>
+    <div class="art-block">
+      <svg viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="night" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0a0f1a"/>
+            <stop offset="100%" stop-color="#050302"/>
+          </linearGradient>
+        </defs>
+        <rect width="400" height="150" fill="url(#night)"/>
+        <!-- moon -->
+        <circle cx="330" cy="35" r="14" fill="#f5e6c8" opacity=".85"/>
+        <circle cx="325" cy="32" r="11" fill="#0a0f1a" opacity=".6"/>
+        <!-- forest silhouettes -->
+        <g fill="#050302">
+          <path d="M0 150 L0 90 Q20 70 40 90 Q60 60 80 90 Q100 70 120 90 Q140 60 160 90 Q180 70 200 90 Q220 60 240 90 Q260 70 280 90 Q300 60 320 90 Q340 70 360 90 Q380 60 400 90 L400 150 Z"/>
+        </g>
+        <!-- lone warrior -->
+        <g fill="#0a0603">
+          <ellipse cx="200" cy="120" rx="14" ry="3"/>
+          <path d="M186 120 L186 100 Q186 92 194 88 L206 88 Q214 92 214 100 L214 120 Z"/>
+          <!-- spear -->
+          <line x1="218" y1="130" x2="222" y2="80" stroke="#1a1207" stroke-width="1.5"/>
+          <path d="M222 80 L219 72 L225 72 Z" fill="#3a2417"/>
+        </g>
+        <!-- fireflies -->
+        <g fill="#d5a56a" opacity=".7">
+          <circle cx="100" cy="100" r="1"/>
+          <circle cx="140" cy="80" r="1"/>
+          <circle cx="280" cy="95" r="1"/>
+          <circle cx="310" cy="70" r="1"/>
+        </g>
+        <text x="200" y="145" text-anchor="middle" fill="#d5a56a" font-family="serif" font-size="6" opacity=".6" letter-spacing="2">PASUKAN YANG TERSISA · AKHIR 1863</text>
+      </svg>
+      <div class="cap">Ilustrasi artistik · Malam terakhir sebelum pengepungan menyempit</div>
+    </div>
+    <p>Di hutan Batulicin, ia menunggu. Bukan menunggu bantuan—bantuan tidak akan datang. Ia menunggu <b>akhir</b> yang sudah ia tahu akan datang. Dan ia memilih untuk tidak lari.</p>
+    <div class="folio"><span class="orn">◆</span> 17 <span class="orn">◆</span></div>
+  </section>
+
+  <!-- ============ 18 — BAB VIII ============ -->
+  <section class="page">
+    <div class="chapter-label">Bab VIII</div>
+    <div class="chapter-title">Penangkapan</div>
+    <div class="chapter-sub">Versi-Versi Sebuah Akhir</div>
+    <div class="rule"><span class="line"></span><span class="dia"></span><span class="line r"></span></div>
+    <p class="first">Tidak ada satu versi tunggal tentang bagaimana Demang Lehman ditangkap. Sejarah kolonial mencatatnya secara dingin: <i>“Ditangkap di daerah Barabai oleh pasukan di bawah Letnan C. Koch pada awal 1864.”</i> Namun hikayat lisan Banjar menceritakan sesuatu yang lebih manusiawi dan lebih tragis.</p>
+    <p><b>Versi pertama</b> menyebut pengkhianatan—seorang kerabat yang menunjukkan persembunyian Demang Lehman di sebuah pondok di tepi hutan setelah diiming-imingi ampun.</p>
+    <p><b>Versi kedua</b> menyebut kelelahan—Demang Lehman yang sudah berbulan-bulan demam malaria, tertidur di surau kecil dan ditemukan patroli Belanda.</p>
+    <p><b>Versi ketiga</b>, yang paling dipercaya oleh keturunannya, menyebut ia menyerahkan diri agar kampung yang melindunginya tidak dibakar habis.</p>
+    <p>Yang pasti, ketika ia dibawa ke Martapura dalam keadaan terikat, orang-orang berkerumun di tepi jalan. Bukan untuk menghujat, tetapi untuk melihat untuk terakhir kali wajah panglima mereka. Ada yang menangis diam-diam. Ada yang menyelipkan secarik doa ke tangannya.</p>
+    <p>Belanda mencatat ia tetap tegap, tidak menunduk, bahkan ketika borgol besi mengiris pergelangan tangannya. Seorang saksi Belanda menulis: <i>“Tawanan itu memandang kami seolah kamilah yang tertawan.”</i></p>
+    <div class="folio"><span class="orn">◆</span> 18 <span class="orn">◆</span></div>
+  </section>
+
+  <!-- ============ 19 — BAB IX (1) ============ -->
+  <section class="page">
+    <div class="chapter-label">Bab IX</div>
+    <div class="chapter-title">27 Februari 1864</div>
+    <div class="chapter-sub">Hari Gantung di Martapura</div>
+    <div class="rule"><span class="line"></span><span class="dia"></span><span class="line r"></span></div>
+    <p class="first"><b>27 Februari 1864.</b> Pagi yang lembab di Martapura. Di alun-alun, tiang gantungan telah didirikan semalam. Belanda ingin menjadikannya tontonan—peringatan bagi siapa saja yang berani melawan. Mereka mengundang para demang yang telah menyerah, para kepala kampung, dan penduduk untuk menyaksikan.</p>
+    <p>Demang Lehman dibawa keluar. Menurut catatan W.A. van Rees dalam <i>De Bandjermasinsche Krijg</i>, ia diberi kesempatan untuk meminta ampun. Ia menolak.</p>
+    <p>Ucapan terakhirnya, yang dicatat berbeda-beda namun intinya sama, adalah:</p>
+    <p class="quote">“Aku mati untuk tanahku. Kalian boleh menggantung tubuhku, tapi kalian tidak akan pernah bisa menggantung semangat Banjar.”</p>
+    <p>Lalu ia melangkah sendiri ke tiang gantungan. Algojo menarik tali. Tubuh itu tergantung.</p>
+    <p>Namun kisah tidak berakhir di situ. Legenda yang kemudian menyebar ke seluruh Banjar—dan yang memberi judul pada hikayat ini—menyebutkan bahwa setelah eksekusi, kepala Demang Lehman dipenggal dan dibawa pergi.</p>
+    <div class="folio"><span class="orn">◆</span> 19 <span class="orn">◆</span></div>
+  </section>
+
+  <!-- ============ 20 — BAB IX (2) ============ -->
+  <section class="page">
+    <div class="chapter-sub">Teriakan Seorang Ibu</div>
+    <p>Ada yang mengatakan dibawa ke Batavia, ada yang mengatakan dibawa ke Belanda sebagai trofi perang, sebagai “bukti” bahwa pemberontakan telah dipadamkan. Seorang ibu yang menyaksikan dari kejauhan berteriak:</p>
+    <p class="quote">“Lihat! Panglima kita kini tak berkepala, tapi ia tetap berdiri!”</p>
+    <div class="art-block">
+      <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="dawn" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#3a2417"/>
+            <stop offset="50%" stop-color="#7a4a2a"/>
+            <stop offset="100%" stop-color="#1a0e07"/>
+          </linearGradient>
+        </defs>
+        <rect width="400" height="160" fill="url(#dawn)"/>
+        <!-- sun rising -->
+        <circle cx="200" cy="110" r="30" fill="#d5a56a" opacity=".55"/>
+        <circle cx="200" cy="110" r="45" fill="#d5a56a" opacity=".15"/>
+        <!-- scaffold -->
+        <g stroke="#050302" stroke-width="3" fill="none">
+          <line x1="200" y1="20" x2="200" y2="100"/>
+          <line x1="180" y1="20" x2="220" y2="20"/>
+          <line x1="200" y1="30" x2="200" y2="55"/>
+        </g>
+        <!-- rope -->
+        <line x1="200" y1="55" x2="200" y2="75" stroke="#3a2417" stroke-width="1.2"/>
+        <!-- crowd silhouettes -->
+        <g fill="#050302">
+          <circle cx="40" cy="130" r="4"/>
+          <path d="M34 135 L34 150 L46 150 L46 135 Z"/>
+          <circle cx="65" cy="128" r="4"/>
+          <path d="M59 133 L59 150 L71 150 L71 133 Z"/>
+          <circle cx="90" cy="132" r="4"/>
+          <path d="M84 137 L84 150 L96 150 L96 137 Z"/>
+          <circle cx="310" cy="130" r="4"/>
+          <path d="M304 135 L304 150 L316 150 L316 135 Z"/>
+          <circle cx="340" cy="128" r="4"/>
+          <path d="M334 133 L334 150 L346 150 L346 133 Z"/>
+          <circle cx="365" cy="132" r="4"/>
+          <path d="M359 137 L359 150 L371 150 L371 137 Z"/>
+        </g>
+        <!-- lone woman with arm raised -->
+        <g fill="#050302">
+          <circle cx="130" cy="125" r="5"/>
+          <path d="M123 130 L123 150 L137 150 L137 130 Z"/>
+          <line x1="125" y1="132" x2="118" y2="118" stroke="#050302" stroke-width="1.5"/>
+        </g>
+        <text x="200" y="155" text-anchor="middle" fill="#d5a56a" font-family="serif" font-size="6" opacity=".6" letter-spacing="2">ALUN-ALUN MARTAPURA · SUBUH</text>
+      </svg>
+      <div class="cap">Ilustrasi artistik · Subuh di alun-alun, ketika langit ikut berduka</div>
+    </div>
+    <p>Legenda ini bukan sekadar mitos. Ia adalah cara rakyat Banjar menolak menerima kekalahan. Selama kepala itu belum kembali, selama tubuh itu masih “berdiri” dalam ingatan, maka perjuangan belum selesai.</p>
+    <div class="folio"><span class="orn">◆</span> 20 <span class="orn">◆</span></div>
+  </section>
+
+  <!-- ============ 21 — BAB X ============ -->
+  <section class="page">
+    <div class="chapter-label">Bab X</div>
+    <div class="chapter-title">Sang Panglima<br>Tak Berkepala</div>
+    <div class="chapter-sub">Kepala yang Hilang, Semangat yang Abadi</div>
+    <div class="rule"><span class="line"></span><span class="dia"></span><span class="line r"></span></div>
+    <p class="first">Kisah kepala Demang Lehman yang dibawa ke Belanda bukanlah sekadar cerita mistis. Praktik membawa potongan tubuh pemimpin pemberontakan sebagai trofi dan bahan studi <i>frenologi</i> memang dilakukan oleh pemerintah kolonial pada abad ke-19. Tengkorak-tengkorak dari berbagai wilayah Nusantara tercatat dikirim ke Museum Leiden. Hingga hari ini, upaya repatriasi masih dilakukan oleh pemerintah Indonesia.</p>
+    <p>Namun bagi rakyat Banjar, “Panglima Tak Berkepala” memiliki makna yang jauh lebih dalam dari sekadar fakta fisik. Ia adalah metafora. Kepala adalah simbol akal, strategi, jabatan. Demang Lehman kehilangan kepalanya—ia kehilangan jabatan, kehilangan perang secara militer, kehilangan hidupnya.</p>
+    <p>Namun tubuhnya, yang dalam hikayat digambarkan tetap berdiri tegak tanpa kepala, adalah semangat <i>Haram Manyarah</i> itu sendiri.</p>
+    <p>Filosofinya sederhana namun menghantam: <b>kepala boleh hilang, semangat tidak.</b> Jabatan boleh dicabut, tanah boleh dirampas, tubuh boleh digantung—tetapi selama ada satu orang yang menolak lupa, maka perlawanan belum selesai.</p>
+    <p>Itulah mengapa hingga hari ini, di Martapura, makam Demang Lehman yang tanpa kepala tetap diziarahi. Orang datang bukan untuk meratapi kematian, tetapi untuk meminjam keberanian. Untuk berkata: jika ia bisa teguh sampai <i>kaputing</i>, mengapa aku menyerah begitu mudah?</p>
+    <div class="folio"><span class="orn">◆</span> 21 <span class="orn">◆</span></div>
+  </section>
+
+  <!-- ============ 22 — WARISAN ============ -->
+  <section class="page">
+    <div class="chapter-label">Warisan</div>
+    <div class="chapter-title">Untuk Generasi<br>Pelaut dan Bangsa</div>
+    <div class="chapter-sub">Haram Manyarah · Waja Sampai Kaputing</div>
+    <div class="rule"><span class="line"></span><span class="dia"></span><span class="line r"></span></div>
+    <p class="first">Apa yang ditinggalkan Demang Lehman? Bukan istana, bukan harta, bukan pula garis keturunan bangsawan yang panjang. Yang ia tinggalkan adalah sebuah kalimat: <b>Haram Manyarah, Waja Sampai Kaputing.</b></p>
+    <p>Bagi generasi hari ini, warisan itu dapat dibaca dalam banyak bahasa. Bagi pelaut seperti saya, ia berarti jangan tinggalkan kapalmu. Bagi petani, ia berarti jangan jual tanahmu hanya karena harga gabah turun. Bagi pelajar, ia berarti jangan berhenti belajar hanya karena ujian terasa berat. Bagi bangsa, ia berarti jangan biarkan sejarahmu ditulis oleh orang lain.</p>
+    <p>Demang Lehman mengajarkan bahwa kepahlawanan tidak selalu berarti menang. Kadang kepahlawanan berarti memilih untuk kalah dengan terhormat daripada menang dengan mengkhianati. Ia kalah secara militer pada 1864. Kesultanan Banjar dibubarkan. Belanda berkuasa penuh selama puluhan tahun kemudian.</p>
+    <p>Namun hari ini, siapa yang diingat sebagai pahlawan? Bukan residen Belanda yang memerintahkan gantung. Bukan algojo yang menarik tali. Melainkan lelaki tanpa kepala yang tetap berdiri di alun-alun Martapura pada pagi lembab Februari itu.</p>
+    <p>Maka jika kau, pembaca e-book ini, sedang merasa kecil dan tidak berdaya, ingatlah: Demang Lehman juga pernah hanya seorang Idis dari kampung kecil. Ia tidak memiliki tentara, tidak memiliki meriam, tidak memiliki dukungan internasional. Ia hanya memiliki sumpah. Dan sumpah itu cukup untuk membuat sebuah imperium ketakutan selama lima tahun.</p>
+    <div class="folio"><span class="orn">◆</span> 22 <span class="orn">◆</span></div>
+  </section>
+
+  <!-- ============ 23 — KRONOLOGI ============ -->
+  <section class="page">
+    <div class="chapter-label">Lampiran</div>
+    <div class="chapter-title">Kronologi<br>Ringkas</div>
+    <div class="chapter-sub">Jejak Waktu Sang Panglima</div>
+    <div class="rule"><span class="line"></span><span class="dia"></span><span class="line r"></span></div>
+    <ul class="krono">
+      <li><span class="y">1832</span><span class="e">Kelahiran Idis (Idies) di wilayah Kesultanan Banjar. Masa kecil sebagai anak sungai dan hutan.</span></li>
+      <li><span class="y">±1857</span><span class="e">Diangkat sebagai <i>lalawangan</i> (kepala distrik) dan mulai dikenal dengan gelar Kiai Demang Lehman. Masa Sultan Adam Al-Watsiq Billah wafat dan perebutan takhta dimulai.</span></li>
+      <li><span class="y">1859</span><span class="e">Perang Banjar meletus secara terbuka. Penyerangan tambang Pengaron. Demang Lehman bergabung dengan pasukan Pangeran Hidayatullah II, memimpin operasi di Martapura, Tabanio, dan Gunung Lawak.</span></li>
+      <li><span class="y">1860–62</span><span class="e">Fase pertempuran benteng. Pengepungan pos-pos Belanda, taktik gerilya intensif. Pangeran Hidayatullah II diasingkan ke Cianjur, Jawa Barat pada 1862. Banyak panglima menyerah, Demang Lehman tetap bertahan.</span></li>
+      <li><span class="y">1863</span><span class="e">Pengepungan terakhir dan menyusutnya wilayah gerilya. Serangan terakhir ke Martapura akhir 1863.</span></li>
+      <li><span class="y">1864</span><span class="e">Awal 1864 ditangkap di sekitar Barabai/Martapura. <b>27 Februari 1864</b> — Hukuman gantung di alun-alun Martapura. Legenda Sang Panglima Tak Berkepala lahir. Kepala dikisahkan dibawa ke Belanda sebagai trofi.</span></li>
+      <li><span class="y">Kini</span><span class="e">Upaya repatriasi tengkorak dan artefak pejuang Banjar dari museum Belanda. Makam Demang Lehman di Martapura menjadi situs ziarah dan simbol Haram Manyarah.</span></li>
+    </ul>
+    <div class="folio"><span class="orn">◆</span> 23 <span class="orn">◆</span></div>
+  </section>
+
+  <!-- ============ 24 — GLOSARIUM & SUMBER ============ -->
+  <section class="page">
+    <div class="chapter-label">Lampiran</div>
+    <div class="chapter-title">Glosarium<br>&amp; Catatan Sumber</div>
+    <div class="rule"><span class="line"></span><span class="dia"></span><span class="line r"></span></div>
+    <dl class="glos">
+      <dt>Lalawangan</dt><dd>Jabatan kepala distrik dalam struktur Kesultanan Banjar; bertanggung jawab atas beberapa kampung, penarik pajak, hakim adat, dan pemimpin perang lokal.</dd>
+      <dt>Panakawan</dt><dd>Pengikut setia atau prajurit pengawal pribadi seorang pangeran atau panglima; sering menjadi pasukan inti gerilya.</dd>
+      <dt>Pusaka</dt><dd>Benda warisan bernilai spiritual—keris, tombak, kain—yang dipercaya sebagai perpanjangan jiwa.</dd>
+      <dt>Repatriasi</dt><dd>Proses pengembalian artefak, tengkorak, atau benda bersejarah dari negara penjajah ke negara asalnya.</dd>
+      <dt>Hikayat Sejarah</dt><dd>Bentuk penulisan sejarah yang menggabungkan fakta dengan gaya sastra puitis agar mudah diingat dan diwariskan secara lisan.</dd>
+    </dl>
+    <div class="chapter-label" style="margin-top:4mm;">Sumber Utama</div>
+    <p style="font-size:8.6pt;line-height:1.55;">Van Rees, W.A. <i>De Bandjermasinsche Krijg van 1859–1863</i>. Arnhem: D.A. Thieme, 1865. · <i>Krijgsraad te Velde</i> (1865), himpunan putusan vonis mati. · Nationaal Archief Den Haag, inv. nr. 1468. · Saleh, M. Idwar. <i>Pangeran Antasari</i> &amp; <i>Sekitar Perang Banjar 1859–1905</i> (Depdikbud, 1981/82). · Mayur, Syarkawi. <i>Perang Banjar</i> (Banjarmasin: Rindang, 1989). · Barjie B., Ahmad. <i>Perang Banjar Barito</i>. · Van der Werff, Iris. <i>Let the Severed Head Speak</i> (Tesis MA, UvA, 2022). · Liputan RRI Banjarmasin, Historia.id, Media Indonesia, Detik.com tentang Demang Lehman dan upaya repatriasi. · Arsip Musium Negeri Lambung Mangkurat, Banjarbaru.</p>
+    <div class="folio"><span class="orn">◆</span> 24 <span class="orn">◆</span></div>
+  </section>
+
+  <!-- ============ 25 — EPILOG / BACK COVER ============ -->
+  <section class="page back">
+    <div class="orn"><span class="d"></span><span class="d"></span><span class="d"></span></div>
+    <div class="t">Hikayat ini selesai,<br><em>tapi semangatnya belum.</em></div>
+    <p class="p">“Waja Sampai Kaputing — teguh sampai akhir, baja sampai ke ujungnya. Jika baja itu patah, maka patahlah dengan terhormat.”</p>
+    <p class="p" style="font-size:9.5pt;margin-top:4mm;">— Rafael Sukirno, CE.</p>
+    <div class="orn" style="margin-top:6mm;"><span class="d"></span><span class="d"></span><span class="d"></span></div>
+    <div class="foot">Haram Manyarah · Waja Sampai Kaputing</div>
+    <div class="folio"><span class="orn">◆</span> 25 <span class="orn">◆</span></div>
+  </section>
+
+</div>
+</body>
+</html>
